@@ -27,5 +27,6 @@ func SetupRouter() *gin.Engine {
 	r.Use(CORSMiddleware())
 
 	r.POST("/login/", controllers.Login)
+	r.POST("/signup/", controllers.Signup)
 	return r
 }

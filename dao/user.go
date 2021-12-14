@@ -13,7 +13,12 @@ type User struct {
 	Time     time.Time `json:"time"`
 }
 
-type UserRequest struct {
+type UserLogin struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type UserSignup struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
