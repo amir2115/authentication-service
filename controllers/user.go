@@ -1,4 +1,4 @@
-package DAL
+package controllers
 
 import (
 	"AuthenticationService/dal"
