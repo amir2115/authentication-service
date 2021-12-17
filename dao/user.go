@@ -13,6 +13,10 @@ type User struct {
 	Time     time.Time `json:"time"`
 }
 
+type UserAuthenticate struct {
+	Token string `json:"token"`
+}
+
 type UserLogin struct {
 	Username string `json:"username"`
 	Password string `json:"password"`

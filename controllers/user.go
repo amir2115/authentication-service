@@ -8,6 +8,20 @@ import (
 	"net/http"
 )
 
+func Authenticate(c *gin.Context) {
+	var input DAO.UserAuthenticate
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"messageCode": 403, "message": utils.Messages[403], "error": err.Error()})
+		return
+	}
+	exist, _ := GetUserByToken(input.Token)
+	if !exist {
+		c.JSON(http.StatusBadRequest, gin.H{"messageCode": 403, "message": utils.Messages[403]})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"messageCode": 409, "message": utils.Messages[409]})
+}
+
 func Login(c *gin.Context) {
 	var input DAO.UserLogin
 	if err := c.ShouldBindJSON(&input); err != nil {
