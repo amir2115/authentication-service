@@ -6,15 +6,15 @@ import (
 	"AuthenticationService/utils"
 )
 
-func CreateUser(username, password, name string) DAO.User {
-	hash, err := DAO.HashPassword(password)
+func CreateUser(userSignup DAO.UserSignup) DAO.User {
+	hash, err := DAO.HashPassword(userSignup.Password)
 	if err != nil {
 		return DAO.User{}
 	}
 	user := DAO.User{
-		Username: username,
+		Username: userSignup.Username,
 		Password: hash,
-		Name:     name,
+		Name:     userSignup.Name,
 		Time:     utils.GetCurrentTime(),
 	}
 	config.DB.Create(&user)

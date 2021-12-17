@@ -1,19 +1,51 @@
 package config
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	DAO "AuthenticationService/dao"
+	"fmt"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
 func ConnectDatabase() {
-	//connArgs := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", "havabaaruser", "xba54gj5y976&Dn", "localhost", 3306, "havabaar")
-	database, err := gorm.Open("sqlite3", "database.db")
+	var err error
+	DB, err = gorm.Open(mysql.Open(DbURL(BuildDBConfig())), &gorm.Config{})
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
+	DB.AutoMigrate(
+		&DAO.User{},
+	)
 
-	database.AutoMigrate()
-	DB = database
+}
+
+type DBConfig struct {
+	Host     string
+	Port     int
+	User     string
+	DBName   string
+	Password string
+}
+
+func BuildDBConfig() *DBConfig {
+	dbConfig := DBConfig{
+		Host:     "localhost",
+		Port:     3306,
+		User:     "root",
+		Password: "qweqwe",
+		DBName:   "user_auth",
+	}
+	return &dbConfig
+}
+func DbURL(dbConfig *DBConfig) string {
+	return fmt.Sprintf(
+		"%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		dbConfig.User,
+		dbConfig.Password,
+		dbConfig.Host,
+		dbConfig.Port,
+		dbConfig.DBName,
+	)
 }

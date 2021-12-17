@@ -1,7 +1,7 @@
 package routes
 
 import (
-	DAL "AuthenticationService/controllers"
+	"AuthenticationService/controllers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,6 +26,8 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
-	r.POST("/login/", DAL.Login)
+	r.POST("/authenticate/", controllers.Authenticate)
+	r.POST("/login/", controllers.Login)
+	r.POST("/signup/", controllers.Signup)
 	return r
 }
