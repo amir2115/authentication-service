@@ -33,7 +33,7 @@ type DBConfig struct {
 func BuildDBConfig() *DBConfig {
 	dbConfig := DBConfig{
 		Host:     os.Getenv("user_auth_host_var"),
-		Port:     os.Getenv("user_auth_port_var"),
+		Port:     int(os.Getenv("user_auth_port_var")),
 		User:     "root",
 		Password: os.Getenv("user_auth_pass_var"),
 		DBName:   os.Getenv("user_auth_name_var"),
